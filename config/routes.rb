@@ -177,10 +177,8 @@ Rails.application.routes.draw do
       resources :search_entries_reindex, only: %i[create]
       resources :sms, only: %i[index], controller: 'sms_settings'
     end
-    if Docuseal.demo? || !Docuseal.multitenant?
-      resources :api, only: %i[index create], controller: 'api_settings'
-      resource :reveal_access_token, only: %i[show create], controller: 'reveal_access_token'
-    end
+    resources :api, only: %i[index create], controller: 'api_settings'
+    resource :reveal_access_token, only: %i[show create], controller: 'reveal_access_token'
     resources :email, only: %i[index create], controller: 'email_smtp_settings'
     resources :sso, only: %i[index], controller: 'sso_settings'
     resources :notifications, only: %i[index create], controller: 'notifications_settings'

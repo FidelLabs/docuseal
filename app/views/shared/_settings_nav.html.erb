@@ -50,19 +50,15 @@
         </li>
       <% end %>
       <%= render 'shared/settings_nav_extra' %>
-      <% if Docuseal.demo? || !Docuseal.multitenant? %>
-        <% if can?(:read, AccessToken) %>
-          <li>
-            <%= link_to 'API', settings_api_index_path, class: 'text-base hover:bg-base-300' %>
-          </li>
-        <% end %>
+      <% if can?(:read, AccessToken) %>
+        <li>
+          <%= link_to 'API', settings_api_index_path, class: 'text-base hover:bg-base-300' %>
+        </li>
       <% end %>
-      <% if Docuseal.demo? || !Docuseal.multitenant? || (current_user != true_user && !current_account.testing?) %>
-        <% if can?(:read, WebhookUrl) %>
-          <li>
-            <%= link_to 'Webhooks', settings_webhooks_path, class: 'text-base hover:bg-base-300' %>
-          </li>
-        <% end %>
+      <% if can?(:read, WebhookUrl) %>
+        <li>
+          <%= link_to 'Webhooks', settings_webhooks_path, class: 'text-base hover:bg-base-300' %>
+        </li>
       <% end %>
       <% if !Docuseal.demo? && can?(:manage, EncryptedConfig) && (current_user != true_user || !current_account.linked_account_account) %>
         <li>
