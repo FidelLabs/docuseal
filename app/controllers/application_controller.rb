@@ -121,9 +121,9 @@ class ApplicationController < ActionController::Base
   end
 
   def maybe_redirect_com
-    return if request.domain != 'docuseal.co'
-
-    redirect_to request.url.gsub('.co/', '.com/'), allow_other_host: true, status: :moved_permanently
+    # Not needed for signpaw.com - this was for docuseal.co -> docuseal.com redirects
+    # Keeping method for compatibility but it does nothing for signpaw domains
+    nil
   end
 
   def set_csp
