@@ -3,8 +3,7 @@
 class DashboardController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index]
 
-  before_action :maybe_redirect_product_url
-  before_action :maybe_render_landing
+  before_action :redirect_to_sign_in_unless_authenticated
   before_action :maybe_redirect_mfa_setup
 
   skip_authorization_check
@@ -19,14 +18,13 @@ class DashboardController < ApplicationController
 
   private
 
-  def maybe_redirect_product_url
-    return if !Docuseal.multitenant? || signed_in?
+  def redirect_to_sign_in_unless_authenticated
+    return if signed_in?
+    # Don't redirect if already on sign in page (prevents redirect loop)
+    return if request.path == new_user_session_path
 
-    product_url = Docuseal::PRODUCT_URL
-    # Don't redirect if PRODUCT_URL is the same as current request URL (prevents redirect loops)
-    return if product_url.present? && request.base_url == product_url
-
-    redirect_to product_url, allow_other_host: true
+    # Redirect to sign in page if not authenticated
+    redirect_to new_user_session_path
   end
 
   def maybe_redirect_mfa_setup
@@ -40,9 +38,4 @@ class DashboardController < ApplicationController
     redirect_to mfa_setup_path, notice: I18n.t('setup_2fa_to_continue')
   end
 
-  def maybe_render_landing
-    return if signed_in?
-
-    render 'pages/landing'
-  end
 end
