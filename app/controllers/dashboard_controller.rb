@@ -22,7 +22,11 @@ class DashboardController < ApplicationController
   def maybe_redirect_product_url
     return if !Docuseal.multitenant? || signed_in?
 
-    redirect_to Docuseal::PRODUCT_URL, allow_other_host: true
+    product_url = Docuseal::PRODUCT_URL
+    # Don't redirect if PRODUCT_URL is the same as current request URL (prevents redirect loops)
+    return if product_url.present? && request.base_url == product_url
+
+    redirect_to product_url, allow_other_host: true
   end
 
   def maybe_redirect_mfa_setup

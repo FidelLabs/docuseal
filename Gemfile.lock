@@ -457,6 +457,8 @@ GEM
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
+    redis (5.4.1)
+      redis-client (>= 0.22.0)
     redis-client (0.23.0)
       connection_pool
     regexp_parser (2.11.3)
@@ -660,6 +662,7 @@ DEPENDENCIES
   rails
   rails-i18n
   rails_autolink
+  redis (~> 5.0)
   rotp
   rouge
   rqrcode

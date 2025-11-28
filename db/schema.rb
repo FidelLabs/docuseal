@@ -11,14 +11,32 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_11_21_113910) do
+  create_schema "_realtime"
+  create_schema "auth"
+  create_schema "extensions"
+  create_schema "graphql"
+  create_schema "graphql_public"
+  create_schema "net"
+  create_schema "pgbouncer"
+  create_schema "realtime"
+  create_schema "storage"
+  create_schema "supabase_functions"
+  create_schema "supabase_migrations"
+  create_schema "vault"
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
-  enable_extension "plpgsql"
+  enable_extension "extensions.pg_stat_statements"
+  enable_extension "extensions.pgcrypto"
+  enable_extension "extensions.uuid-ossp"
+  enable_extension "graphql.pg_graphql"
+  enable_extension "pg_catalog.plpgsql"
+  enable_extension "vault.supabase_vault"
 
   create_table "access_tokens", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "token", null: false
-    t.text "sha256", null: false
+    t.string "sha256", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sha256"], name: "index_access_tokens_on_sha256", unique: true
@@ -279,9 +297,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_113910) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.tsvector "ngram"
-    t.index ["account_id", "ngram"], name: "index_search_entries_on_account_id_ngram_submission", where: "((record_type)::text = 'Submission'::text)", using: :gin
-    t.index ["account_id", "ngram"], name: "index_search_entries_on_account_id_ngram_submitter", where: "((record_type)::text = 'Submitter'::text)", using: :gin
-    t.index ["account_id", "ngram"], name: "index_search_entries_on_account_id_ngram_template", where: "((record_type)::text = 'Template'::text)", using: :gin
+    t.index ["account_id", "tsvector"], name: "index_search_entries_on_account_id_ngram_submission", where: "((record_type)::text = 'Submission'::text)", using: :gin
+    t.index ["account_id", "tsvector"], name: "index_search_entries_on_account_id_ngram_submitter", where: "((record_type)::text = 'Submitter'::text)", using: :gin
+    t.index ["account_id", "tsvector"], name: "index_search_entries_on_account_id_ngram_template", where: "((record_type)::text = 'Template'::text)", using: :gin
     t.index ["account_id", "tsvector"], name: "index_search_entries_on_account_id_tsvector_submission", where: "((record_type)::text = 'Submission'::text)", using: :gin
     t.index ["account_id", "tsvector"], name: "index_search_entries_on_account_id_tsvector_submitter", where: "((record_type)::text = 'Submitter'::text)", using: :gin
     t.index ["account_id", "tsvector"], name: "index_search_entries_on_account_id_tsvector_template", where: "((record_type)::text = 'Template'::text)", using: :gin

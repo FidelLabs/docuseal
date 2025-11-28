@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+# Load .env file in development and production
+if ENV['RAILS_ENV'] != 'test'
+  require 'dotenv'
+  Dotenv.load('.env') if File.exist?('.env')
+end
+
 if ENV['RAILS_ENV'] == 'production'
   if !ENV['AWS_SECRET_MANAGER_ID'].to_s.empty?
     require 'aws-sdk-secretsmanager'

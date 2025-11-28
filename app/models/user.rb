@@ -25,7 +25,7 @@
 #  role                   :string           not null
 #  sign_in_count          :integer          default(0), not null
 #  unlock_token           :string
-#  uuid                   :text             not null
+#  uuid                   :string           not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  account_id             :bigint           not null
@@ -64,7 +64,7 @@ class User < ApplicationRecord
   has_many :encrypted_configs, dependent: :destroy, class_name: 'EncryptedUserConfig'
   has_many :email_messages, dependent: :destroy, foreign_key: :author_id, inverse_of: :author
 
-  devise :two_factor_authenticatable, :recoverable, :rememberable, :validatable, :trackable, :lockable
+  devise :two_factor_authenticatable, :recoverable, :rememberable, :validatable, :trackable, :lockable, :registerable
 
   attribute :role, :string, default: ADMIN_ROLE
   attribute :uuid, :string, default: -> { SecureRandom.uuid }

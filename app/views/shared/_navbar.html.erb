@@ -89,12 +89,20 @@
           </span>
         <% end %>
       <% end %>
-      <% if Docuseal.multitenant? && !request.path.in?([registration_path, new_registration_path]) %>
-        <%= link_to registration_path({ lang: params[:lang] }.compact_blank), class: 'btn btn-neutral btn-sm btn-outline' do %>
-          <span class="flex items-center justify-center space-x-1">
-            <span class="hidden sm:block capitalize"><%= t('create_free_account') %></span>
-            <span class="md:hidden"><%= t('sign_up') %></span>
-          </span>
+      <% if Docuseal.multitenant? %>
+        <% begin %>
+          <% reg_path = registration_path rescue nil %>
+          <% new_reg_path = new_registration_path rescue nil %>
+          <% if reg_path && !request.path.in?([reg_path, new_reg_path]) %>
+            <%= link_to reg_path, { lang: params[:lang] }.compact_blank, class: 'btn btn-neutral btn-sm btn-outline' do %>
+              <span class="flex items-center justify-center space-x-1">
+                <span class="hidden sm:block capitalize"><%= t('create_free_account') %></span>
+                <span class="md:hidden"><%= t('sign_up') %></span>
+              </span>
+            <% end %>
+          <% end %>
+        <% rescue => e %>
+          <% # Registration routes not available %>
         <% end %>
       <% end %>
     </div>

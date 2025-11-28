@@ -1,39 +1,27 @@
 services:
   app:
-    depends_on:
-      postgres:
-        condition: service_healthy
-    image: docuseal/docuseal:latest
+    build: .
     ports:
       - 3000:3000
     volumes:
       - ./docuseal:/data/docuseal
+    env_file:
+      - .env
     environment:
-      - FORCE_SSL=${HOST}
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/docuseal
-
-  postgres:
-    image: postgres:15
-    volumes:
-      - './pg_data:/var/lib/postgresql/data'
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: docuseal
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
-  caddy:
-    image: caddy:latest
-    command: caddy reverse-proxy --from $HOST --to app:3000
-    ports:
-      - 80:80
-      - 443:443
-      - 443:443/udp
-    volumes:
-      - .:/data
-    environment:
-      - HOST=${HOST}
+      - FORCE_SSL=${HOST:-false}
+      # Using port 6543 (connection pooler) - requires IPv6 support in Docker
+      # Password is URL-encoded: @@ becomes %40%40
+      - DATABASE_URL=postgresql://postgres:0914876401%40%40@db.igjytnetxppisqcyfsqb.supabase.co:6543/postgres?sslmode=require&connect_timeout=10
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      # Connect to Redis on host machine (host.docker.internal works on Mac/Windows)
+      # For Linux, use the host's IP address or add extra_hosts
+      - REDIS_URL=redis://host.docker.internal:6379/0
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # IMPORTANT: Supabase resolves to IPv6, which Docker on macOS doesn't support by default
+    # To fix: Enable IPv6 in Docker Desktop → Settings → Docker Engine:
+    # {
+    #   "ipv6": true,
+    #   "fixed-cidr-v6": "2001:db8:1::/64"
+    # }
+    # Then restart Docker Desktop and run: docker-compose up -d

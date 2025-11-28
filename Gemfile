@@ -29,6 +29,7 @@ gem 'oj'
 gem 'onnxruntime'
 gem 'pagy'
 gem 'pg', require: false
+gem 'redis', '~> 5.0'
 gem 'premailer-rails'
 gem 'pretender'
 gem 'puma', require: false

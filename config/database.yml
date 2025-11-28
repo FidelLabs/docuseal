@@ -1,18 +1,59 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch('RAILS_MAX_THREADS', 15).to_i + ENV.fetch('SIDEKIQ_THREADS', 5).to_i %>
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS', 5).to_i %>
+  timeout: 5000
+  # Disable prepared statements when using connection poolers (like Supabase)
+  # This prevents PG::DuplicatePstatement errors when connections are reused
+  prepared_statements: false
 
 development:
+  <% if ENV['DATABASE_URL'].present? && ENV['DATABASE_URL'].match?(/\Apostgres/) %>
   <<: *default
-  database: docuseal_dev
+  url: <%= ENV['DATABASE_URL'] %>
+  <% else %>
+  <<: *default
+  host: db.igjytnetxppisqcyfsqb.supabase.co
+  port: 6543
+  username: postgres
+  password: <%= ENV.fetch('DATABASE_PASSWORD', '') %>
+  database: postgres
+  sslmode: require
+  connect_timeout: 10
+  <% end %>
 
 test:
   <<: *default
-  database: docuseal_test
+  host: db.igjytnetxppisqcyfsqb.supabase.co
+  port: 6543
+  username: postgres
+  password: <%= ENV.fetch('DATABASE_PASSWORD', '') %>
+  database: postgres
+  sslmode: require
+  connect_timeout: 10
 
+<% if ENV['DATABASE_REPLICA_URL'].present? && ENV['DATABASE_REPLICA_URL'].match?(/\Apostgres/) %>
 production:
-<% if !ENV['DATABASE_HOST'].to_s.empty? %>
+  primary:
+    <<: *default
+    <% if !ENV['DATABASE_HOST'].to_s.empty? %>
+    host: <%= ENV['DATABASE_HOST'] %>
+    port: <%= ENV['DATABASE_PORT'] %>
+    username: <%= ENV['DATABASE_USER'] %>
+    password: <%= ENV['DATABASE_PASSWORD'] %>
+    database: <%= ENV['DATABASE_NAME'] %>
+    <% if !ENV['DATABASE_SEARCH_PATH'].to_s.empty? %>
+    search_path: <%= ENV['DATABASE_SEARCH_PATH'] %>
+    <% end %>
+    <% elsif ENV['DATABASE_URL'].present? && ENV['DATABASE_URL'].match?(/\Apostgres/) %>
+    url: <%= ENV['DATABASE_URL'] %>
+    <% end %>
+  replica:
+    <<: *default
+    url: <%= ENV['DATABASE_REPLICA_URL'] %>
+<% else %>
+production:
+  <% if !ENV['DATABASE_HOST'].to_s.empty? %>
   <<: *default
   host: <%= ENV['DATABASE_HOST'] %>
   port: <%= ENV['DATABASE_PORT'] %>
@@ -22,17 +63,18 @@ production:
   <% if !ENV['DATABASE_SEARCH_PATH'].to_s.empty? %>
   search_path: <%= ENV['DATABASE_SEARCH_PATH'] %>
   <% end %>
-<% elsif ENV['DATABASE_URL'].to_s.empty? %>
+  <% elsif ENV['DATABASE_URL'].to_s.empty? %>
   adapter: sqlite3
   database: <%= ENV['WORKDIR'] || '.' %>/db.sqlite3
   pool: <%= ENV.fetch('RAILS_MAX_THREADS', 15).to_i + ENV.fetch('SIDEKIQ_THREADS', 5).to_i %>
   timeout: 5000
-<% elsif ENV['DATABASE_URL'].match?(/\Apostgres/) %>
+  <% elsif ENV['DATABASE_URL'].match?(/\Apostgres/) %>
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-<% elsif ENV['DATABASE_URL'].match?(/\Amysql/) %>
+  <% elsif ENV['DATABASE_URL'].match?(/\Amysql/) %>
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch('RAILS_MAX_THREADS', 15).to_i + ENV.fetch('SIDEKIQ_THREADS', 5).to_i %>
   url: <%= ENV['DATABASE_URL'] %>
+  <% end %>
 <% end %>

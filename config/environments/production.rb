@@ -51,6 +51,13 @@ Rails.application.configure do
   config.active_storage.resolve_model_to_route = :rails_storage_proxy if ENV['ACTIVE_STORAGE_PUBLIC'] != 'true'
   config.active_storage.service_urls_expire_in = ENV.fetch('PRESIGNED_URLS_EXPIRE_MINUTES', '240').to_i.minutes
 
+  # Configure asset host/CDN for static assets (JS, CSS, images)
+  if ENV['CDN_URL'].present? || (ENV['MULTITENANT'] == 'true' && Docuseal::CDN_URL != 'http://localhost:3000')
+    cdn_url = ENV['CDN_URL'].presence || Docuseal::CDN_URL
+    config.asset_host = cdn_url
+    config.action_controller.asset_host = cdn_url
+  end
+
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"
@@ -69,7 +76,18 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
 
-  config.cache_store = :memory_store
+  # Use Redis for distributed caching (works across multiple instances)
+  redis_url = ENV.fetch('REDIS_URL', 'redis://localhost:6379/0')
+  config.cache_store = :redis_cache_store, {
+    url: redis_url,
+    namespace: 'cache',
+    expires_in: 1.hour,
+    reconnect_attempts: 3,
+    error_handler: ->(method:, returning:, exception:) {
+      # Log Redis errors but don't crash the app
+      Rails.logger.error("Redis cache error (#{method}): #{exception.message}")
+    }
+  }
 
   config.action_mailer.perform_caching = false
 

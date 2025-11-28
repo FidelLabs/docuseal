@@ -15,9 +15,10 @@ Rails.application.routes.draw do
   get 'manifest' => 'pwa#manifest'
 
   devise_for :users,
-             path: '/', only: %i[sessions passwords omniauth_callbacks],
+             path: '/', only: %i[sessions passwords omniauth_callbacks registrations],
              controllers: begin
                options = { sessions: 'sessions', passwords: 'passwords' }
+               options[:registrations] = 'registrations' if Docuseal.multitenant?
                options[:omniauth_callbacks] = 'omniauth_callbacks' if User.devise_modules.include?(:omniauthable)
                options
              end
@@ -52,6 +53,11 @@ Rails.application.routes.draw do
     scope 'events' do
       resources :form_events, only: %i[index], path: 'form/:type'
       resources :submission_events, only: %i[index], path: 'submission/:type'
+    end
+    namespace :marketing do
+      get 'stats', to: 'marketing#stats'
+      get 'health', to: 'marketing#health'
+      get 'features', to: 'marketing#features'
     end
   end
 
