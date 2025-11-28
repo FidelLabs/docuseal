@@ -14,10 +14,10 @@ module Docuseal
   ENQUIRIES_URL = "#{PRODUCT_URL}/enquiries".freeze
   PRODUCT_NAME = 'SignPaw'
   DEFAULT_APP_URL = ENV.fetch('APP_URL', 'http://localhost:3000')
-  GITHUB_URL = 'https://github.com/docusealco/docuseal'
-  DISCORD_URL = 'https://discord.gg/qygYCDGck9'
-  TWITTER_URL = 'https://twitter.com/docusealco'
-  TWITTER_HANDLE = '@docusealco'
+  # GITHUB_URL = 'https://github.com/docusealco/docuseal'
+  # DISCORD_URL = 'https://discord.gg/qygYCDGck9'
+  TWITTER_URL = 'https://twitter.com/signpaw'
+  TWITTER_HANDLE = '@signpaw'
   CHATGPT_URL = "#{PRODUCT_URL}/chat".freeze
   SUPPORT_EMAIL = ENV.fetch('SUPPORT_EMAIL', 'support@signpaw.com')
   HOST = ENV.fetch('HOST', 'localhost')
@@ -27,12 +27,12 @@ module Docuseal
                 elsif ENV['MULTITENANT'] == 'true'
                   "https://console.#{HOST}"
                 else
-                  'https://console.docuseal.com'
+                  'https://console.signpaw.com'
                 end
   CLOUD_URL = if Rails.env.development?
                 'http://localhost:3000'
               else
-                'https://docuseal.com'
+                'https://signpaw.com'
               end
   CDN_URL = if ENV['CDN_URL'].present?
               ENV['CDN_URL']
@@ -41,7 +41,7 @@ module Docuseal
             elsif ENV['MULTITENANT'] == 'true'
               "https://cdn.#{HOST}"
             else
-              'https://cdn.docuseal.com'
+              'https://cdn.signpaw.com'
             end
 
   CERTS = JSON.parse(ENV.fetch('CERTS', '{}'))
