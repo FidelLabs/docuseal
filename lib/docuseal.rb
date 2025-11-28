@@ -14,8 +14,6 @@ module Docuseal
   ENQUIRIES_URL = "#{PRODUCT_URL}/enquiries".freeze
   PRODUCT_NAME = 'SignPaw'
   DEFAULT_APP_URL = ENV.fetch('APP_URL', 'http://localhost:3000')
-  # GITHUB_URL = 'https://github.com/docusealco/docuseal'
-  # DISCORD_URL = 'https://discord.gg/qygYCDGck9'
   TWITTER_URL = 'https://twitter.com/signpaw'
   TWITTER_HANDLE = '@signpaw'
   CHATGPT_URL = "#{PRODUCT_URL}/chat".freeze
