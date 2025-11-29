@@ -50,7 +50,8 @@
               <% end %>
             </li>
           <% end %>
-          <% if Docuseal.multitenant? || current_user.role == 'superadmin' %>
+          <%# Temporarily disabled Ask AI %>
+          <% if false && (Docuseal.multitenant? || current_user.role == 'superadmin') %>
             <li>
               <%= link_to Docuseal::CHATGPT_URL, target: 'blank', class: 'flex items-center' do %>
                 <%= svg_icon('sparkles', class: 'w-5 h-5 flex-shrink-0 stroke-2') %>

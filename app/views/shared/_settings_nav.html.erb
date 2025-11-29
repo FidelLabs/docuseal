@@ -50,19 +50,15 @@
         </li>
       <% end %>
       <%= render 'shared/settings_nav_extra' %>
-      <% if Docuseal.demo? || !Docuseal.multitenant? %>
-        <% if can?(:read, AccessToken) %>
-          <li>
-            <%= link_to 'API', settings_api_index_path, class: 'text-base hover:bg-base-300' %>
-          </li>
-        <% end %>
+      <% if can?(:read, AccessToken) %>
+        <li>
+          <%= link_to 'API', settings_api_index_path, class: 'text-base hover:bg-base-300' %>
+        </li>
       <% end %>
-      <% if Docuseal.demo? || !Docuseal.multitenant? || (current_user != true_user && !current_account.testing?) %>
-        <% if can?(:read, WebhookUrl) %>
-          <li>
-            <%= link_to 'Webhooks', settings_webhooks_path, class: 'text-base hover:bg-base-300' %>
-          </li>
-        <% end %>
+      <% if can?(:read, WebhookUrl) %>
+        <li>
+          <%= link_to 'Webhooks', settings_webhooks_path, class: 'text-base hover:bg-base-300' %>
+        </li>
       <% end %>
       <% if !Docuseal.demo? && can?(:manage, EncryptedConfig) && (current_user == true_user || current_account.testing?) %>
         <li>
@@ -120,13 +116,14 @@
         <%= t('need_help_ask_a_question_') %>
       </div>
       <div class="flex mt-3 space-x-3">
-        <%= capture do %>
-          <div class="tooltip" data-tip="<%= t('ai_assistant') %>">
-            <a href="<%= Docuseal::CHATGPT_URL %>" target="_blank" class="btn btn-circle btn-primary btn-md">
-              <%= svg_icon('brand_openai', class: 'w-8 h-8') %>
-            </a>
-          </div>
-        <% end %>
+        <%# Temporarily disabled AI assistant %>
+        <%#= capture do %>
+          <%# <div class="tooltip" data-tip="<%= t('ai_assistant') %>"> %>
+            <%# <a href="<%= Docuseal::CHATGPT_URL %>" target="_blank" class="btn btn-circle btn-primary btn-md"> %>
+              <%#= svg_icon('brand_openai', class: 'w-8 h-8') %>
+            <%# </a> %>
+          <%# </div> %>
+        <%# end %>
       </div>
       <a href="mailto:<%= Docuseal::SUPPORT_EMAIL %>" target="_blank" class="w-full block mt-4 underline text-center">
         <%= Docuseal::SUPPORT_EMAIL %>
