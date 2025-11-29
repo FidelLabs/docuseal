@@ -11,7 +11,7 @@ class EsignSettingsController < ApplicationController
     end
   end
 
-  prepend_before_action :maybe_redirect_com, only: %i[show]
+  # maybe_redirect_com removed - was a no-op and could interfere with mobile authentication
 
   before_action :load_encrypted_config
   authorize_resource :encrypted_config, parent: false, only: %i[new create]

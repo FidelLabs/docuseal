@@ -50,56 +50,66 @@
         </li>
       <% end %>
       <%= render 'shared/settings_nav_extra' %>
-      <% if can?(:read, AccessToken) %>
-        <li>
-          <%= link_to 'API', settings_api_index_path, class: 'text-base hover:bg-base-300' %>
-        </li>
+      <% if Docuseal.demo? || !Docuseal.multitenant? %>
+        <% if can?(:read, AccessToken) %>
+          <li>
+            <%= link_to 'API', settings_api_index_path, class: 'text-base hover:bg-base-300' %>
+          </li>
+        <% end %>
       <% end %>
-      <% if can?(:read, WebhookUrl) %>
-        <li>
-          <%= link_to 'Webhooks', settings_webhooks_path, class: 'text-base hover:bg-base-300' %>
-        </li>
-      <% end %>
-      <% if !Docuseal.demo? && can?(:manage, EncryptedConfig) && (current_user != true_user || !current_account.linked_account_account) %>
-        <li>
-          <%= content_for(:pro_link) || link_to(Docuseal.multitenant? ? console_redirect_index_path(redir: "#{Docuseal::CONSOLE_URL}/plans") : "#{Docuseal::CLOUD_URL}/sign_up?#{{ redir: "#{Docuseal::CONSOLE_URL}/on_premises" }.to_query}", class: 'text-base hover:bg-base-300', data: { turbo: false }) do %>
-            <%= t('plans') %>
-            <span class="badge badge-warning"><%= t('pro') %></span>
-          <% end %>
-        </li>
+      <% if Docuseal.demo? || !Docuseal.multitenant? || (current_user != true_user && !current_account.testing?) %>
+        <% if can?(:read, WebhookUrl) %>
+          <li>
+            <%= link_to 'Webhooks', settings_webhooks_path, class: 'text-base hover:bg-base-300' %>
+          </li>
+        <% end %>
       <% end %>
       <% if !Docuseal.demo? && can?(:manage, EncryptedConfig) && (current_user == true_user || current_account.testing?) %>
         <li>
-          <%= link_to Docuseal.multitenant? ? console_redirect_index_path(redir: "#{Docuseal::CONSOLE_URL}#{'/test' if current_account.testing?}/api") : "#{Docuseal::CONSOLE_URL}/on_premises", class: 'text-base hover:bg-base-300', data: { turbo: false } do %>
-            <% if Docuseal.multitenant? %> API <% else %> <%= t('console') %> <% end %>
+          <%= link_to plans_path, class: 'text-base hover:bg-base-300' do %>
+            <%= t('plans') %>
+            <% unless current_account.has_active_subscription? %>
+              <span class="badge badge-warning"><%= t('pro') %></span>
+            <% end %>
           <% end %>
         </li>
-        <% if Docuseal.multitenant? %>
+      <% end %>
+      <% # Console redirects temporarily disabled - API/Console and Embedding %>
+      <% # Disabled console redirect links that go to CONSOLE_URL %>
+      <% if false %>
+        <% if !Docuseal.demo? && can?(:manage, EncryptedConfig) && (current_user == true_user || current_account.testing?) %>
           <li>
-            <%= link_to console_redirect_index_path(redir: "#{Docuseal::CONSOLE_URL}#{'/test' if current_account.testing?}/embedding/form"), class: 'text-base hover:bg-base-300', data: { turbo: false } do %>
-              <%= t('embedding') %>
+            <%= link_to Docuseal.multitenant? ? console_redirect_index_path(redir: "#{Docuseal::CONSOLE_URL}#{'/test' if current_account.testing?}/api") : "#{Docuseal::CONSOLE_URL}/on_premises", class: 'text-base hover:bg-base-300', data: { turbo: false } do %>
+              <% if Docuseal.multitenant? %> API <% else %> <%= t('console') %> <% end %>
             <% end %>
           </li>
-        <% end %>
-        <% if (!Docuseal.multitenant? || can?(:manage, :saml_sso)) && can?(:read, EncryptedConfig.new(key: 'saml_configs', account: current_account)) && true_user == current_user %>
-          <li>
-            <%= link_to 'SSO', settings_sso_index_path, class: 'text-base hover:bg-base-300' %>
-          </li>
-        <% end %>
-        <%= render 'shared/settings_nav_extra2' %>
-        <% if (can?(:manage, EncryptedConfig) && current_user == true_user) || (current_user != true_user && current_account.testing?) %>
-          <%= form_for '', url: testing_account_path, method: current_account.testing? ? :delete : :get, html: { class: 'w-full' } do |f| %>
+          <% if Docuseal.multitenant? %>
             <li>
-              <label class="flex items-center text-base hover:bg-base-300 w-full justify-between" for="testing_toggle">
-                <span class="mr-2 w-full">
-                  <%= t('test_mode') %>
-                </span>
-                <submit-form data-on="change" class="flex">
-                  <%= f.check_box :testing_toggle, class: 'toggle toggle-sm', checked: current_account.testing? %>
-                </submit-form>
-              </label>
+              <%= link_to console_redirect_index_path(redir: "#{Docuseal::CONSOLE_URL}#{'/test' if current_account.testing?}/embedding/form"), class: 'text-base hover:bg-base-300', data: { turbo: false } do %>
+                <%= t('embedding') %>
+              <% end %>
             </li>
           <% end %>
+        <% end %>
+      <% end %>
+      <% if (!Docuseal.multitenant? || can?(:manage, :saml_sso)) && can?(:read, EncryptedConfig.new(key: 'saml_configs', account: current_account)) && true_user == current_user %>
+        <li>
+          <%= link_to 'SSO', settings_sso_index_path, class: 'text-base hover:bg-base-300' %>
+        </li>
+      <% end %>
+      <%= render 'shared/settings_nav_extra2' %>
+      <% if (can?(:manage, EncryptedConfig) && current_user == true_user) || (current_user != true_user && current_account.testing?) %>
+        <%= form_for '', url: testing_account_path, method: current_account.testing? ? :delete : :get, html: { class: 'w-full' } do |f| %>
+          <li>
+            <label class="flex items-center text-base hover:bg-base-300 w-full justify-between" for="testing_toggle">
+              <span class="mr-2 w-full">
+                <%= t('test_mode') %>
+              </span>
+              <submit-form data-on="change" class="flex">
+                <%= f.check_box :testing_toggle, class: 'toggle toggle-sm', checked: current_account.testing? %>
+              </submit-form>
+            </label>
+          </li>
         <% end %>
       <% end %>
     </ul>
