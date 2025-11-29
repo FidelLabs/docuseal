@@ -4,7 +4,7 @@ The API endpoint provides the ability to retrieve a list of available document t
 
 ```shell
 curl --request GET \
-  --url https://api.docuseal.com/templates \
+  --url https://app.signpaw.com/api/templates \
   --header 'X-Auth-Token: API_KEY'
 ```
 
@@ -104,7 +104,7 @@ The API endpoint provides the functionality to retrieve information about a docu
 
 ```shell
 curl --request GET \
-  --url https://api.docuseal.com/templates/1000001 \
+  --url https://app.signpaw.com/api/templates/1000001 \
   --header 'X-Auth-Token: API_KEY'
 ```
 
@@ -141,7 +141,7 @@ The API endpoint allows you to archive a document template.
 
 ```shell
 curl --request DELETE \
-  --url https://api.docuseal.com/templates/1000001 \
+  --url https://app.signpaw.com/api/templates/1000001 \
   --header 'X-Auth-Token: API_KEY'
 ```
 
@@ -178,7 +178,7 @@ The API endpoint provides the functionality to move a document template to a dif
 
 ```shell
 curl --request PUT \
-  --url https://api.docuseal.com/templates/1000001 \
+  --url https://app.signpaw.com/api/templates/1000001 \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"name":"New Document Name","folder_name":"New Folder"}'
@@ -254,7 +254,7 @@ The API endpoint provides the ability to retrieve a list of available submission
 
 ```shell
 curl --request GET \
-  --url https://api.docuseal.com/submissions \
+  --url https://app.signpaw.com/api/submissions \
   --header 'X-Auth-Token: API_KEY'
 ```
 
@@ -365,11 +365,11 @@ curl --request GET \
 
 ### Create a submission
 
-This API endpoint allows you to create signature requests (submissions) for a document template and send them to the specified submitters (signers).<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/send-documents-for-signature-via-api" class="link">Send documents for signature via API</a><br><a href="https://www.docuseal.com/guides/pre-fill-pdf-document-form-fields-with-api" class="link">Pre-fill PDF document form fields with API</a>
+This API endpoint allows you to create signature requests (submissions) for a document template and send them to the specified submitters (signers).<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/send-documents-for-signature-via-api" class="link">Send documents for signature via API</a><br><a href="https://www.signpaw.com/guides/pre-fill-pdf-document-form-fields-with-api" class="link">Pre-fill PDF document form fields with API</a>
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/submissions \
+  --url https://app.signpaw.com/api/submissions \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"template_id":1000001,"send_email":true,"submitters":[{"role":"First Party","email":"john.doe@example.com"}]}'
@@ -401,7 +401,7 @@ curl --request POST \
           "properties": {
             "template_id": {
               "type": "integer",
-              "description": "The unique identifier of the template. Document template forms can be created via the Web UI, <a href=\"https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form\" class=\"link\">PDF and DOCX API</a>, or <a href=\"https://www.docuseal.com/guides/create-pdf-document-fillable-form-with-html-api\" class=\"link\">HTML API</a>.",
+              "description": "The unique identifier of the template. Document template forms can be created via the Web UI, <a href=\"https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form\" class=\"link\">PDF and DOCX API</a>, or <a href=\"https://www.signpaw.com/guides/create-pdf-document-fillable-form-with-html-api\" class=\"link\">HTML API</a>.",
               "example": 1000001
             },
             "send_email": {
@@ -760,7 +760,7 @@ The API endpoint provides the functionality to retrieve information about a subm
 
 ```shell
 curl --request GET \
-  --url https://api.docuseal.com/submissions/1001 \
+  --url https://app.signpaw.com/api/submissions/1001 \
   --header 'X-Auth-Token: API_KEY'
 ```
 
@@ -797,7 +797,7 @@ The API endpoint allows you to archive a submission.
 
 ```shell
 curl --request DELETE \
-  --url https://api.docuseal.com/submissions/1001 \
+  --url https://app.signpaw.com/api/submissions/1001 \
   --header 'X-Auth-Token: API_KEY'
 ```
 
@@ -834,7 +834,7 @@ This endpoint returns a list of partially filled documents for a submission. If 
 
 ```shell
 curl --request GET \
-  --url https://api.docuseal.com/submissions/1001/documents \
+  --url https://app.signpaw.com/api/submissions/1001/documents \
   --header 'X-Auth-Token: API_KEY'
 ```
 
@@ -871,10 +871,10 @@ This API endpoint allows you to create submissions for a document template and s
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/submissions/emails \
+  --url https://app.signpaw.com/api/submissions/emails \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
-  --data '{"template_id":1000001,"emails":"hi@docuseal.com, example@docuseal.com"}'
+  --data '{"template_id":1000001,"emails":"hi@signpaw.com, example@signpaw.com"}'
 ```
 
 ```json
@@ -943,7 +943,7 @@ The API endpoint provides functionality to retrieve information about a submitte
 
 ```shell
 curl --request GET \
-  --url https://api.docuseal.com/submitters/500001 \
+  --url https://app.signpaw.com/api/submitters/500001 \
   --header 'X-Auth-Token: API_KEY'
 ```
 
@@ -976,11 +976,11 @@ curl --request GET \
 
 ### Update a submitter
 
-The API endpoint allows you to update submitter details, pre-fill or update field values and re-send emails.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/pre-fill-pdf-document-form-fields-with-api#automatically_sign_documents_via_api" class="link">Automatically sign documents via API</a>
+The API endpoint allows you to update submitter details, pre-fill or update field values and re-send emails.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/pre-fill-pdf-document-form-fields-with-api#automatically_sign_documents_via_api" class="link">Automatically sign documents via API</a>
 
 ```shell
 curl --request PUT \
-  --url https://api.docuseal.com/submitters/500001 \
+  --url https://app.signpaw.com/api/submitters/500001 \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"email":"john.doe@example.com","fields":[{"name":"First Name","default_value":"Acme"}]}'
@@ -1287,7 +1287,7 @@ The API endpoint provides the ability to retrieve a list of submitters.
 
 ```shell
 curl --request GET \
-  --url https://api.docuseal.com/submitters \
+  --url https://app.signpaw.com/api/submitters \
   --header 'X-Auth-Token: API_KEY'
 ```
 
@@ -1400,7 +1400,7 @@ The API endpoint allows you to add, remove or replace documents in the template 
 
 ```shell
 curl --request PUT \
-  --url https://api.docuseal.com/templates/1000001/documents \
+  --url https://app.signpaw.com/api/templates/1000001/documents \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"documents":[{"file":"string"}]}'
@@ -1494,7 +1494,7 @@ The API endpoint allows you to clone existing template into a new template.
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/templates/1000001/clone \
+  --url https://app.signpaw.com/api/templates/1000001/clone \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"name":"Cloned Template"}'
@@ -1554,11 +1554,11 @@ curl --request POST \
 
 ### Create a template from HTML
 
-The API endpoint provides the functionality to seamlessly generate a PDF document template by utilizing the provided HTML content while incorporating pre-defined fields.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
+The API endpoint provides the functionality to seamlessly generate a PDF document template by utilizing the provided HTML content while incorporating pre-defined fields.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/templates/html \
+  --url https://app.signpaw.com/api/templates/html \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"html":"<p>Lorem Ipsum is simply dummy text of the\n<text-field\n  name=\"Industry\"\n  role=\"First Party\"\n  required=\"false\"\n  style=\"width: 80px; height: 16px; display: inline-block; margin-bottom: -4px\">\n</text-field>\nand typesetting industry</p>\n","name":"Test Template"}'
@@ -1670,12 +1670,12 @@ curl --request POST \
 
 ### Create a template from Word DOCX
 
-The API endpoint provides the functionality to create a fillable document template for existing Microsoft Word document. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.docx" target="_blank" class="link font-bold" >https://www.docuseal.com/examples/fieldtags.docx</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create a fillable document template for existing Microsoft Word document. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.docx" target="_blank" class="link font-bold" >https://www.signpaw.com/examples/fieldtags.docx</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/templates/docx \
+  --url https://app.signpaw.com/api/templates/docx \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"name":"Test DOCX","documents":[{"name":"string","file":"base64"}]}'
@@ -1982,12 +1982,12 @@ curl --request POST \
 
 ### Create a template from existing PDF
 
-The API endpoint provides the functionality to create a fillable document template for existing PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.docuseal.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create a fillable document template for existing PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.signpaw.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/templates/pdf \
+  --url https://app.signpaw.com/api/templates/pdf \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"name":"Test PDF","documents":[{"name":"string","file":"base64","fields":[{"name":"string","areas":[{"x":0,"y":0,"w":0,"h":0,"page":1}]}]}]}'
@@ -2271,7 +2271,7 @@ The API endpoint allows you to merge multiple templates with documents and field
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/templates/merge \
+  --url https://app.signpaw.com/api/templates/merge \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"template_ids":[321,432],"name":"Merged Template"}'
@@ -2350,12 +2350,12 @@ curl --request POST \
 
 ### Create a submission from PDF
 
-The API endpoint provides the functionality to create one-off submission request from a PDF. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.docuseal.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create one-off submission request from a PDF. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.signpaw.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/submissions/pdf \
+  --url https://app.signpaw.com/api/submissions/pdf \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"name":"Test Submission Document","documents":[{"name":"string","file":"base64","fields":[{"name":"string","areas":[{"x":0,"y":0,"w":0,"h":0,"page":1}]}]}],"submitters":[{"role":"First Party","email":"john.doe@example.com"}]}'
@@ -2881,11 +2881,11 @@ curl --request POST \
 
 ### Create a submission from HTML
 
-This API endpoint allows you to create a one-off submission request document using the provided HTML content, with special field tags rendered as a fillable and signable form.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
+This API endpoint allows you to create a one-off submission request document using the provided HTML content, with special field tags rendered as a fillable and signable form.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/submissions/html \
+  --url https://app.signpaw.com/api/submissions/html \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"name":"Test Submission Document","documents":[{"name":"Test Document","html":"<p>Lorem Ipsum is simply dummy text of the\n<text-field\n  name=\"Industry\"\n  role=\"First Party\"\n  required=\"false\"\n  style=\"width: 80px; height: 16px; display: inline-block; margin-bottom: -4px\">\n</text-field>\nand typesetting industry</p>\n"}],"submitters":[{"role":"First Party","email":"john.doe@example.com"}]}'
@@ -3325,12 +3325,12 @@ curl --request POST \
 
 ### Create a template from PDF
 
-The API endpoint provides the functionality to create a fillable document template for a PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.docuseal.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create a fillable document template for a PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.signpaw.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/templates/pdf \
+  --url https://app.signpaw.com/api/templates/pdf \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"name":"Test PDF","documents":[{"name":"string","file":"base64","fields":[{"name":"string","areas":[{"x":0,"y":0,"w":0,"h":0,"page":1}]}]}]}'
@@ -3655,11 +3655,11 @@ curl --request POST \
 
 ### Create a submission from DOCX
 
-The API endpoint provides functionality to create a one-off submission request from a DOCX file with dynamic content variables. Use <code>[[variable_name]]</code> text tags to define dynamic content variables in the document. See <a href="https://www.docuseal.com/examples/demo_template.docx" target="_blank" class="link font-bold">https://www.docuseal.com/examples/demo_template.docx</a> for the specific text variable syntax, including dynamic content tables and list. You can also use the <code>{{signature}}</code> fillable field syntax to define fillable fields, as in a PDF.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides functionality to create a one-off submission request from a DOCX file with dynamic content variables. Use <code>[[variable_name]]</code> text tags to define dynamic content variables in the document. See <a href="https://www.signpaw.com/examples/demo_template.docx" target="_blank" class="link font-bold">https://www.signpaw.com/examples/demo_template.docx</a> for the specific text variable syntax, including dynamic content tables and list. You can also use the <code>{{signature}}</code> fillable field syntax to define fillable fields, as in a PDF.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 ```shell
 curl --request POST \
-  --url https://api.docuseal.com/submissions/docx \
+  --url https://app.signpaw.com/api/submissions/docx \
   --header 'X-Auth-Token: API_KEY' \
   --header 'content-type: application/json' \
   --data '{"name":"Test Submission Document","variables":{"variable_name":"value"},"documents":[{"name":"string","file":"base64"}],"submitters":[{"role":"First Party","email":"john.doe@example.com"}]}'

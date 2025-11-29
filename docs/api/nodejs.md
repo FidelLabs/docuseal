@@ -5,7 +5,7 @@ The API endpoint provides the ability to retrieve a list of available document t
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates", {
+const resp = await fetch("https://app.signpaw.com/api/templates", {
   method: "GET",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -112,7 +112,7 @@ The API endpoint provides the functionality to retrieve information about a docu
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates/1000001", {
+const resp = await fetch("https://app.signpaw.com/api/templates/1000001", {
   method: "GET",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -156,7 +156,7 @@ The API endpoint allows you to archive a document template.
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates/1000001", {
+const resp = await fetch("https://app.signpaw.com/api/templates/1000001", {
   method: "DELETE",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -200,7 +200,7 @@ The API endpoint provides the functionality to move a document template to a dif
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates/1000001", {
+const resp = await fetch("https://app.signpaw.com/api/templates/1000001", {
   method: "PUT",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -285,7 +285,7 @@ The API endpoint provides the ability to retrieve a list of available submission
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submissions", {
+const resp = await fetch("https://app.signpaw.com/api/submissions", {
   method: "GET",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -402,12 +402,12 @@ const { data, pagination } = await resp.json();
 
 ### Create a submission
 
-This API endpoint allows you to create signature requests (submissions) for a document template and send them to the specified submitters (signers).<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/send-documents-for-signature-via-api" class="link">Send documents for signature via API</a><br><a href="https://www.docuseal.com/guides/pre-fill-pdf-document-form-fields-with-api" class="link">Pre-fill PDF document form fields with API</a>
+This API endpoint allows you to create signature requests (submissions) for a document template and send them to the specified submitters (signers).<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/send-documents-for-signature-via-api" class="link">Send documents for signature via API</a><br><a href="https://www.signpaw.com/guides/pre-fill-pdf-document-form-fields-with-api" class="link">Pre-fill PDF document form fields with API</a>
 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submissions", {
+const resp = await fetch("https://app.signpaw.com/api/submissions", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -453,7 +453,7 @@ const submitters = await resp.json();
           "properties": {
             "template_id": {
               "type": "integer",
-              "description": "The unique identifier of the template. Document template forms can be created via the Web UI, <a href=\"https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form\" class=\"link\">PDF and DOCX API</a>, or <a href=\"https://www.docuseal.com/guides/create-pdf-document-fillable-form-with-html-api\" class=\"link\">HTML API</a>.",
+              "description": "The unique identifier of the template. Document template forms can be created via the Web UI, <a href=\"https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form\" class=\"link\">PDF and DOCX API</a>, or <a href=\"https://www.signpaw.com/guides/create-pdf-document-fillable-form-with-html-api\" class=\"link\">HTML API</a>.",
               "example": 1000001
             },
             "send_email": {
@@ -813,7 +813,7 @@ The API endpoint provides the functionality to retrieve information about a subm
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submissions/1001", {
+const resp = await fetch("https://app.signpaw.com/api/submissions/1001", {
   method: "GET",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -857,7 +857,7 @@ The API endpoint allows you to archive a submission.
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submissions/1001", {
+const resp = await fetch("https://app.signpaw.com/api/submissions/1001", {
   method: "DELETE",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -901,7 +901,7 @@ This endpoint returns a list of partially filled documents for a submission. If 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submissions/1001/documents", {
+const resp = await fetch("https://app.signpaw.com/api/submissions/1001/documents", {
   method: "GET",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -945,14 +945,14 @@ This API endpoint allows you to create submissions for a document template and s
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submissions/emails", {
+const resp = await fetch("https://app.signpaw.com/api/submissions/emails", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"
   },
   body: JSON.stringify({
     template_id: 1000001,
-    emails: "hi@docuseal.com, example@docuseal.com"
+    emails: "hi@signpaw.com, example@signpaw.com"
   })
 });
 
@@ -1026,7 +1026,7 @@ The API endpoint provides functionality to retrieve information about a submitte
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submitters/500001", {
+const resp = await fetch("https://app.signpaw.com/api/submitters/500001", {
   method: "GET",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -1065,12 +1065,12 @@ const submitter = await resp.json();
 
 ### Update a submitter
 
-The API endpoint allows you to update submitter details, pre-fill or update field values and re-send emails.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/pre-fill-pdf-document-form-fields-with-api#automatically_sign_documents_via_api" class="link">Automatically sign documents via API</a>
+The API endpoint allows you to update submitter details, pre-fill or update field values and re-send emails.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/pre-fill-pdf-document-form-fields-with-api#automatically_sign_documents_via_api" class="link">Automatically sign documents via API</a>
 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submitters/500001", {
+const resp = await fetch("https://app.signpaw.com/api/submitters/500001", {
   method: "PUT",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -1391,7 +1391,7 @@ The API endpoint provides the ability to retrieve a list of submitters.
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submitters", {
+const resp = await fetch("https://app.signpaw.com/api/submitters", {
   method: "GET",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -1511,7 +1511,7 @@ The API endpoint allows you to add, remove or replace documents in the template 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates/1000001/documents", {
+const resp = await fetch("https://app.signpaw.com/api/templates/1000001/documents", {
   method: "PUT",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -1617,7 +1617,7 @@ The API endpoint allows you to clone existing template into a new template.
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates/1000001/clone", {
+const resp = await fetch("https://app.signpaw.com/api/templates/1000001/clone", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -1684,12 +1684,12 @@ const template = await resp.json();
 
 ### Create a template from HTML
 
-The API endpoint provides the functionality to seamlessly generate a PDF document template by utilizing the provided HTML content while incorporating pre-defined fields.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
+The API endpoint provides the functionality to seamlessly generate a PDF document template by utilizing the provided HTML content while incorporating pre-defined fields.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates/html", {
+const resp = await fetch("https://app.signpaw.com/api/templates/html", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -1817,13 +1817,13 @@ const template = await resp.json();
 
 ### Create a template from Word DOCX
 
-The API endpoint provides the functionality to create a fillable document template for existing Microsoft Word document. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.docx" target="_blank" class="link font-bold" >https://www.docuseal.com/examples/fieldtags.docx</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create a fillable document template for existing Microsoft Word document. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.docx" target="_blank" class="link font-bold" >https://www.signpaw.com/examples/fieldtags.docx</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates/docx", {
+const resp = await fetch("https://app.signpaw.com/api/templates/docx", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -2143,13 +2143,13 @@ const template = await resp.json();
 
 ### Create a template from existing PDF
 
-The API endpoint provides the functionality to create a fillable document template for existing PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.docuseal.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create a fillable document template for existing PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.signpaw.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates/pdf", {
+const resp = await fetch("https://app.signpaw.com/api/templates/pdf", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -2461,7 +2461,7 @@ The API endpoint allows you to merge multiple templates with documents and field
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates/merge", {
+const resp = await fetch("https://app.signpaw.com/api/templates/merge", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -2551,13 +2551,13 @@ const template = await resp.json();
 
 ### Create a submission from PDF
 
-The API endpoint provides the functionality to create one-off submission request from a PDF. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.docuseal.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create one-off submission request from a PDF. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.signpaw.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submissions/pdf", {
+const resp = await fetch("https://app.signpaw.com/api/submissions/pdf", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -3116,12 +3116,12 @@ const submission = await resp.json();
 
 ### Create a submission from HTML
 
-This API endpoint allows you to create a one-off submission request document using the provided HTML content, with special field tags rendered as a fillable and signable form.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
+This API endpoint allows you to create a one-off submission request document using the provided HTML content, with special field tags rendered as a fillable and signable form.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submissions/html", {
+const resp = await fetch("https://app.signpaw.com/api/submissions/html", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -3588,13 +3588,13 @@ const submission = await resp.json();
 
 ### Create a template from PDF
 
-The API endpoint provides the functionality to create a fillable document template for a PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.docuseal.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create a fillable document template for a PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.signpaw.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/templates/pdf", {
+const resp = await fetch("https://app.signpaw.com/api/templates/pdf", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"
@@ -3946,12 +3946,12 @@ const template = await resp.json();
 
 ### Create a submission from DOCX
 
-The API endpoint provides functionality to create a one-off submission request from a DOCX file with dynamic content variables. Use <code>[[variable_name]]</code> text tags to define dynamic content variables in the document. See <a href="https://www.docuseal.com/examples/demo_template.docx" target="_blank" class="link font-bold">https://www.docuseal.com/examples/demo_template.docx</a> for the specific text variable syntax, including dynamic content tables and list. You can also use the <code>{{signature}}</code> fillable field syntax to define fillable fields, as in a PDF.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides functionality to create a one-off submission request from a DOCX file with dynamic content variables. Use <code>[[variable_name]]</code> text tags to define dynamic content variables in the document. See <a href="https://www.signpaw.com/examples/demo_template.docx" target="_blank" class="link font-bold">https://www.signpaw.com/examples/demo_template.docx</a> for the specific text variable syntax, including dynamic content tables and list. You can also use the <code>{{signature}}</code> fillable field syntax to define fillable fields, as in a PDF.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 ```nodejs
 const fetch = require("node-fetch");
 
-const resp = await fetch("https://api.docuseal.com/submissions/docx", {
+const resp = await fetch("https://app.signpaw.com/api/submissions/docx", {
   method: "POST",
   headers: {
     "X-Auth-Token": "API_KEY"

@@ -5,7 +5,7 @@ The API endpoint provides the ability to retrieve a list of available document t
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const { data, pagination } = await docuseal.listTemplates({ limit: 10 });
 ```
@@ -107,7 +107,7 @@ The API endpoint provides the functionality to retrieve information about a docu
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const template = await docuseal.getTemplate(1000001);
 ```
@@ -146,7 +146,7 @@ The API endpoint allows you to archive a document template.
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 await docuseal.archiveTemplate(1000001);
 ```
@@ -185,7 +185,7 @@ The API endpoint provides the functionality to move a document template to a dif
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const template = await docuseal.updateTemplate(1000001, {
   name: "New Document Name",
@@ -264,7 +264,7 @@ The API endpoint provides the ability to retrieve a list of available submission
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const { data, pagination } = await docuseal.listSubmissions({ limit: 10 });
 ```
@@ -376,12 +376,12 @@ const { data, pagination } = await docuseal.listSubmissions({ limit: 10 });
 
 ### Create a submission
 
-This API endpoint allows you to create signature requests (submissions) for a document template and send them to the specified submitters (signers).<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/send-documents-for-signature-via-api" class="link">Send documents for signature via API</a><br><a href="https://www.docuseal.com/guides/pre-fill-pdf-document-form-fields-with-api" class="link">Pre-fill PDF document form fields with API</a>
+This API endpoint allows you to create signature requests (submissions) for a document template and send them to the specified submitters (signers).<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/send-documents-for-signature-via-api" class="link">Send documents for signature via API</a><br><a href="https://www.signpaw.com/guides/pre-fill-pdf-document-form-fields-with-api" class="link">Pre-fill PDF document form fields with API</a>
 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const submission = await docuseal.createSubmission({
   template_id: 1000001,
@@ -421,7 +421,7 @@ const submission = await docuseal.createSubmission({
           "properties": {
             "template_id": {
               "type": "integer",
-              "description": "The unique identifier of the template. Document template forms can be created via the Web UI, <a href=\"https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form\" class=\"link\">PDF and DOCX API</a>, or <a href=\"https://www.docuseal.com/guides/create-pdf-document-fillable-form-with-html-api\" class=\"link\">HTML API</a>.",
+              "description": "The unique identifier of the template. Document template forms can be created via the Web UI, <a href=\"https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form\" class=\"link\">PDF and DOCX API</a>, or <a href=\"https://www.signpaw.com/guides/create-pdf-document-fillable-form-with-html-api\" class=\"link\">HTML API</a>.",
               "example": 1000001
             },
             "send_email": {
@@ -781,7 +781,7 @@ The API endpoint provides the functionality to retrieve information about a subm
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const submission = await docuseal.getSubmission(1001);
 ```
@@ -820,7 +820,7 @@ The API endpoint allows you to archive a submission.
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 await docuseal.archiveSubmission(1001);
 ```
@@ -859,7 +859,7 @@ This endpoint returns a list of partially filled documents for a submission. If 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const submission = await docuseal.getSubmissionDocuments(1001);
 ```
@@ -898,11 +898,11 @@ This API endpoint allows you to create submissions for a document template and s
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const submission = await docuseal.createSubmissionFromEmails({
   template_id: 1000001,
-  emails: "hi@docuseal.com, example@docuseal.com"
+  emails: "hi@signpaw.com, example@signpaw.com"
 });
 ```
 
@@ -973,7 +973,7 @@ The API endpoint provides functionality to retrieve information about a submitte
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const submitter = await docuseal.getSubmitter(500001);
 ```
@@ -1007,12 +1007,12 @@ const submitter = await docuseal.getSubmitter(500001);
 
 ### Update a submitter
 
-The API endpoint allows you to update submitter details, pre-fill or update field values and re-send emails.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/pre-fill-pdf-document-form-fields-with-api#automatically_sign_documents_via_api" class="link">Automatically sign documents via API</a>
+The API endpoint allows you to update submitter details, pre-fill or update field values and re-send emails.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/pre-fill-pdf-document-form-fields-with-api#automatically_sign_documents_via_api" class="link">Automatically sign documents via API</a>
 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const submitter = await docuseal.updateSubmitter(500001, {
   email: "john.doe@example.com",
@@ -1327,7 +1327,7 @@ The API endpoint provides the ability to retrieve a list of submitters.
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const { data, pagination } = await docuseal.listSubmitters({ limit: 10 });
 ```
@@ -1442,7 +1442,7 @@ The API endpoint allows you to add, remove or replace documents in the template 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const template = await docuseal.updateTemplateDocuments(1000001, {
   documents: [
@@ -1542,7 +1542,7 @@ The API endpoint allows you to clone existing template into a new template.
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const template = await docuseal.cloneTemplate(1000001, {
   name: "Cloned Template"
@@ -1603,12 +1603,12 @@ const template = await docuseal.cloneTemplate(1000001, {
 
 ### Create a template from HTML
 
-The API endpoint provides the functionality to seamlessly generate a PDF document template by utilizing the provided HTML content while incorporating pre-defined fields.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
+The API endpoint provides the functionality to seamlessly generate a PDF document template by utilizing the provided HTML content while incorporating pre-defined fields.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const template = await docuseal.createTemplateFromHtml({
   html: `<p>Lorem Ipsum is simply dummy text of the
@@ -1730,13 +1730,13 @@ and typesetting industry</p>
 
 ### Create a template from Word DOCX
 
-The API endpoint provides the functionality to create a fillable document template for existing Microsoft Word document. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.docx" target="_blank" class="link font-bold" >https://www.docuseal.com/examples/fieldtags.docx</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create a fillable document template for existing Microsoft Word document. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.docx" target="_blank" class="link font-bold" >https://www.signpaw.com/examples/fieldtags.docx</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const template = await docuseal.createTemplateFromDocx({
   name: "Test DOCX",
@@ -2050,13 +2050,13 @@ const template = await docuseal.createTemplateFromDocx({
 
 ### Create a template from existing PDF
 
-The API endpoint provides the functionality to create a fillable document template for existing PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.docuseal.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create a fillable document template for existing PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.signpaw.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const template = await docuseal.createTemplateFromPdf({
   name: "Test PDF",
@@ -2362,7 +2362,7 @@ The API endpoint allows you to merge multiple templates with documents and field
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const template = await docuseal.mergeTemplates({
   template_ids: [
@@ -2446,13 +2446,13 @@ const template = await docuseal.mergeTemplates({
 
 ### Create a submission from PDF
 
-The API endpoint provides the functionality to create one-off submission request from a PDF. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.docuseal.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create one-off submission request from a PDF. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.signpaw.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const submission = await docuseal.createSubmissionFromPdf({
   name: "Test Submission Document",
@@ -3005,12 +3005,12 @@ const submission = await docuseal.createSubmissionFromPdf({
 
 ### Create a submission from HTML
 
-This API endpoint allows you to create a one-off submission request document using the provided HTML content, with special field tags rendered as a fillable and signable form.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
+This API endpoint allows you to create a one-off submission request document using the provided HTML content, with special field tags rendered as a fillable and signable form.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/create-pdf-document-fillable-form-with-html-api" class="link">Create PDF document fillable form with HTML</a>
 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const submission = await docuseal.createSubmissionFromHtml({
   name: "Test Submission Document",
@@ -3471,13 +3471,13 @@ and typesetting industry</p>
 
 ### Create a template from PDF
 
-The API endpoint provides the functionality to create a fillable document template for a PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.docuseal.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.docuseal.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides the functionality to create a fillable document template for a PDF file. Use <code>{{Field Name;role=Signer1;type=date}}</code> text tags to define fillable fields in the document. See <a href="https://www.signpaw.com/examples/fieldtags.pdf" target="_blank" class="link font-bold">https://www.signpaw.com/examples/fieldtags.pdf</a> for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const template = await docuseal.createTemplateFromPdf({
   name: "Test PDF",
@@ -3823,12 +3823,12 @@ const template = await docuseal.createTemplateFromPdf({
 
 ### Create a submission from DOCX
 
-The API endpoint provides functionality to create a one-off submission request from a DOCX file with dynamic content variables. Use <code>[[variable_name]]</code> text tags to define dynamic content variables in the document. See <a href="https://www.docuseal.com/examples/demo_template.docx" target="_blank" class="link font-bold">https://www.docuseal.com/examples/demo_template.docx</a> for the specific text variable syntax, including dynamic content tables and list. You can also use the <code>{{signature}}</code> fillable field syntax to define fillable fields, as in a PDF.<br><b>Related Guides</b><br><a href="https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
+The API endpoint provides functionality to create a one-off submission request from a DOCX file with dynamic content variables. Use <code>[[variable_name]]</code> text tags to define dynamic content variables in the document. See <a href="https://www.signpaw.com/examples/demo_template.docx" target="_blank" class="link font-bold">https://www.signpaw.com/examples/demo_template.docx</a> for the specific text variable syntax, including dynamic content tables and list. You can also use the <code>{{signature}}</code> fillable field syntax to define fillable fields, as in a PDF.<br><b>Related Guides</b><br><a href="https://www.signpaw.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form" class="link">Use embedded text field tags to create a fillable form</a>
 
 ```typescript
 import docuseal from "@docuseal/api";
 
-docuseal.configure({ key: "API_KEY", url: "https://api.docuseal.com" });
+docuseal.configure({ key: "API_KEY", url: "https://app.signpaw.com/api" });
 
 const submission = await docuseal.createSubmissionFromDocx({
   name: "Test Submission Document",
