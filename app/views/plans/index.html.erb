@@ -1,6 +1,6 @@
-<div class="flex flex-wrap space-y-4 md:flex-nowrap md:space-y-0">
+<div class="flex flex-wrap space-y-4 md:flex-nowrap md:space-y-0 md:space-x-10">
   <%= render 'shared/settings_nav' %>
-  <div class="flex-grow max-w-4xl mx-auto">
+  <div class="flex-grow">
     <h1 class="text-4xl font-bold mb-8">Choose Your Plan</h1>
 
     <% if @current_subscription&.stripe_customer_id.present? %>
@@ -120,39 +120,64 @@
 </div>
 
 <%= javascript_tag nonce: true do %>
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('Plans page loaded, setting up subscribe buttons...');
-    const subscribeButtons = document.querySelectorAll('[data-action="subscribe"]');
-    console.log('Found subscribe buttons:', subscribeButtons.length);
+  // Use event delegation to handle clicks - works with Turbo Drive
+  document.addEventListener('click', function(e) {
+    // Find the actual button element (could be clicked on text inside button)
+    let button = e.target;
     
-    subscribeButtons.forEach(function(button) {
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Subscribe button clicked');
-        const planType = this.getAttribute('data-plan-type');
-        console.log('Plan type:', planType);
-        subscribeToPlan(planType);
-      });
-    });
-
+    // If clicked on something inside the button, find the button
+    if (!button.hasAttribute('data-action')) {
+      button = button.closest('[data-action]');
+    }
+    
+    if (!button) return; // Not a button we care about
+    
+    const action = button.getAttribute('data-action');
+    console.log('Button clicked with action:', action);
+    
+    // Handle subscribe buttons
+    if (action === 'subscribe') {
+      e.preventDefault();
+      e.stopPropagation();
+      const planType = button.getAttribute('data-plan-type');
+      console.log('Subscribe button clicked, plan:', planType);
+      
+      // Disable button and show loading
+      button.disabled = true;
+      const originalText = button.innerHTML;
+      button.innerHTML = '<span class="loading loading-spinner loading-sm"></span> Loading...';
+      
+      subscribeToPlan(planType, button, originalText);
+      return;
+    }
+    
     // Handle manage subscription button
-    const manageButton = document.querySelector('[data-action="manage-subscription"]');
-    if (manageButton) {
-      manageButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Manage subscription clicked');
-        createPortalSession();
-      });
+    if (action === 'manage-subscription') {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Manage subscription clicked');
+      
+      // Disable button and show loading
+      button.disabled = true;
+      const originalText = button.innerHTML;
+      button.innerHTML = '<span class="loading loading-spinner loading-sm"></span> Loading...';
+      
+      createPortalSession(button, originalText);
+      return;
     }
   });
 
-  function subscribeToPlan(planType) {
+  function subscribeToPlan(planType, button, originalText) {
     console.log('subscribeToPlan called with:', planType);
     const csrfToken = document.querySelector('meta[name="csrf-token"]');
     
     if (!csrfToken) {
       console.error('CSRF token not found');
       alert('Security token missing. Please refresh the page and try again.');
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = originalText;
+      }
       return;
     }
 
@@ -184,24 +209,32 @@
         console.log('Redirecting to:', data.checkout_url);
         window.location.href = data.checkout_url;
       } else if (data.error) {
-        alert('Error: ' + data.error);
+        throw new Error(data.error);
       } else {
-        alert('Unexpected response. Please try again.');
+        throw new Error('Unexpected response. Please try again.');
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      alert('An error occurred: ' + error.message + '. Please check the console for details.');
+      alert('An error occurred: ' + error.message + '. Please try again or contact support@signpaw.com');
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = originalText;
+      }
     });
   }
 
-  function createPortalSession() {
+  function createPortalSession(button, originalText) {
     console.log('createPortalSession called');
     const csrfToken = document.querySelector('meta[name="csrf-token"]');
     
     if (!csrfToken) {
       console.error('CSRF token not found');
       alert('Security token missing. Please refresh the page and try again.');
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = originalText;
+      }
       return;
     }
 
@@ -215,33 +248,33 @@
         'X-CSRF-Token': csrfToken.content,
         'Accept': 'application/json'
       },
-      credentials: 'same-origin',
-      redirect: 'manual' // Don't follow redirects automatically
+      credentials: 'same-origin'
     })
     .then(response => {
       console.log('Response status:', response.status);
-      // Check if it's a redirect
-      if (response.status === 302 || response.status === 301) {
-        const location = response.headers.get('Location');
-        if (location) {
-          console.log('Redirecting to:', location);
-          window.location.href = location;
-          return;
-        }
+      if (!response.ok) {
+        return response.json().then(data => {
+          throw new Error(data.error || 'Server error');
+        });
       }
-      // If not a redirect, try to parse as JSON
-      return response.json().then(data => {
-        if (data.portal_url || data.url) {
-          console.log('Redirecting to portal:', data.portal_url || data.url);
-          window.location.href = data.portal_url || data.url;
-        } else {
-          throw new Error(data.error || 'No redirect URL received');
-        }
-      });
+      return response.json();
+    })
+    .then(data => {
+      console.log('Response data:', data);
+      if (data.portal_url) {
+        console.log('Redirecting to portal:', data.portal_url);
+        window.location.href = data.portal_url;
+      } else {
+        throw new Error('No portal URL received');
+      }
     })
     .catch(error => {
       console.error('Error:', error);
-      alert('An error occurred: ' + error.message + '. Please check the console for details.');
+      alert('An error occurred: ' + error.message + '. Please try again or contact support@signpaw.com');
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = originalText;
+      }
     });
   }
 <% end %>
