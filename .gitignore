@@ -30,6 +30,7 @@ yarn-debug.log*
 .yarn-integrity
 
 .env
+.env.local
 .DS_Store
 
 /coverage
@@ -38,3 +39,11 @@ yarn-debug.log*
 /ee
 dump.rdb
 *.onnx
+
+# Local Supabase
+supabase/.branches
+supabase/.temp
+
+docs/node_modules
+
+docs/public
