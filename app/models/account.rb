@@ -50,6 +50,7 @@ class Account < ApplicationRecord
   has_many :testing_accounts, through: :account_testing_accounts, source: :linked_account
   has_many :active_users, -> { active }, dependent: :destroy,
                                          inverse_of: :account, class_name: 'User'
+  has_one :subscription, dependent: :destroy
 
   attribute :timezone, :string, default: 'UTC'
   attribute :locale, :string, default: 'en-US'
@@ -58,6 +59,18 @@ class Account < ApplicationRecord
 
   def testing?
     linked_account_account&.testing?
+  end
+
+  def has_pro_plan?
+    subscription&.pro? || (linked_account_account.present? rescue false)
+  end
+
+  def has_enterprise_plan?
+    subscription&.enterprise?
+  end
+
+  def has_active_subscription?
+    subscription&.active? || (linked_account_account.present? rescue false)
   end
 
   def tz_info

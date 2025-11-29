@@ -36,9 +36,9 @@
           </li>
           <% if !Docuseal.demo? && can?(:manage, EncryptedConfig) %>
             <li>
-              <%= link_to Docuseal.multitenant? ? console_redirect_index_path : Docuseal::CONSOLE_URL, data: { prefetch: false }, class: 'flex items-center' do %>
-                <%= svg_icon('terminal', class: 'w-5 h-5 flex-shrink-0 stroke-2') %>
-                <%= t('console') %>
+              <%= link_to 'https://signpaw.com', target: '_blank', data: { prefetch: false }, class: 'flex items-center' do %>
+                <%= svg_icon('world', class: 'w-5 h-5 flex-shrink-0 stroke-2') %>
+                <span class="mr-1">Page</span>
               <% end %>
             </li>
           <% end %>
@@ -95,10 +95,10 @@
           <% new_reg_path = new_registration_path rescue nil %>
           <% if reg_path && !request.path.in?([reg_path, new_reg_path]) %>
             <%= link_to reg_path, { lang: params[:lang] }.compact_blank, class: 'btn btn-neutral btn-sm btn-outline' do %>
-              <span class="flex items-center justify-center space-x-1">
-                <span class="hidden sm:block capitalize"><%= t('create_free_account') %></span>
-                <span class="md:hidden"><%= t('sign_up') %></span>
-              </span>
+          <span class="flex items-center justify-center space-x-1">
+            <span class="hidden sm:block capitalize"><%= t('create_free_account') %></span>
+            <span class="md:hidden"><%= t('sign_up') %></span>
+          </span>
             <% end %>
           <% end %>
         <% rescue => e %>

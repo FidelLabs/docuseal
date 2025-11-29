@@ -45,6 +45,7 @@ gem 'rubyXL'
 gem 'shakapacker'
 gem 'sidekiq'
 gem 'sqlite3', require: false
+gem 'stripe'
 gem 'strip_attributes'
 gem 'turbo-rails'
 gem 'twitter_cldr', require: false

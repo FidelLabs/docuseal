@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_21_113910) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_29_052817) do
   create_schema "_realtime"
   create_schema "auth"
   create_schema "extensions"
@@ -21,11 +21,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_113910) do
   create_schema "realtime"
   create_schema "storage"
   create_schema "supabase_functions"
-  create_schema "supabase_migrations"
   create_schema "vault"
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
+  enable_extension "extensions.pg_net"
   enable_extension "extensions.pg_stat_statements"
   enable_extension "extensions.pgcrypto"
   enable_extension "extensions.uuid-ossp"
@@ -377,6 +377,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_113910) do
     t.index ["submission_id"], name: "index_submitters_on_submission_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "stripe_subscription_id"
+    t.string "stripe_customer_id"
+    t.string "plan_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_subscriptions_on_account_id"
+    t.index ["plan_type"], name: "index_subscriptions_on_plan_type"
+    t.index ["stripe_customer_id"], name: "index_subscriptions_on_stripe_customer_id", unique: true
+    t.index ["stripe_subscription_id"], name: "index_subscriptions_on_stripe_subscription_id", unique: true
+  end
+
   create_table "template_accesses", force: :cascade do |t|
     t.bigint "template_id", null: false
     t.bigint "user_id", null: false
@@ -536,6 +549,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_113910) do
   add_foreign_key "submissions", "templates"
   add_foreign_key "submissions", "users", column: "created_by_user_id"
   add_foreign_key "submitters", "submissions"
+  add_foreign_key "subscriptions", "accounts"
   add_foreign_key "template_accesses", "templates"
   add_foreign_key "template_folders", "accounts"
   add_foreign_key "template_folders", "template_folders", column: "parent_folder_id"

@@ -1,0 +1,248 @@
+<div class="flex flex-wrap space-y-4 md:flex-nowrap md:space-y-0">
+  <%= render 'shared/settings_nav' %>
+  <div class="flex-grow max-w-4xl mx-auto">
+    <h1 class="text-4xl font-bold mb-8">Choose Your Plan</h1>
+
+    <% if @current_subscription&.stripe_customer_id.present? %>
+      <div class="alert alert-info mb-6">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <p class="font-bold">Current Plan: <%= @current_subscription.plan_type&.capitalize || 'Active' %></p>
+            <p class="text-sm">Manage your subscription, billing, and payment methods through Stripe Customer Portal</p>
+          </div>
+          <button type="button" class="btn btn-sm btn-primary" data-action="manage-subscription">Manage Subscription</button>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Pro Plan -->
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title text-3xl">Pro</h2>
+          <div class="text-4xl font-bold my-4">
+            $29<span class="text-lg font-normal">/month</span>
+          </div>
+          <ul class="space-y-2 my-6">
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 text-green-500 mr-2') %>
+              <span>Certificate Upload</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 text-green-500 mr-2') %>
+              <span>Bulk Send</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 text-green-500 mr-2') %>
+              <span>Email Reminders</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 text-green-500 mr-2') %>
+              <span>API & Embedding</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 text-green-500 mr-2') %>
+              <span>Advanced User Roles</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('x', class: 'w-5 h-5 text-gray-400 mr-2') %>
+              <span class="text-gray-400">SMS (Enterprise only)</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('x', class: 'w-5 h-5 text-gray-400 mr-2') %>
+              <span class="text-gray-400">SSO (Enterprise only)</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('x', class: 'w-5 h-5 text-gray-400 mr-2') %>
+              <span class="text-gray-400">Whitelabel (Enterprise only)</span>
+            </li>
+          </ul>
+          <div class="card-actions justify-end">
+            <% if @current_subscription&.pro? %>
+              <button class="btn btn-primary" disabled>Current Plan</button>
+            <% else %>
+              <button type="button" class="btn btn-primary" data-plan-type="pro" data-action="subscribe">Subscribe to Pro</button>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div class="card bg-primary text-primary-content shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title text-3xl">Enterprise</h2>
+          <div class="text-4xl font-bold my-4">
+            $20<span class="text-lg font-normal">/user/month</span>
+          </div>
+          <p class="text-sm opacity-80 mb-4">Starting at 5 users. Contact us for pricing.</p>
+          <ul class="space-y-2 my-6">
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 mr-2') %>
+              <span>Everything in Pro</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 mr-2') %>
+              <span>SMS Sending</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 mr-2') %>
+              <span>SSO (SAML 2.0)</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 mr-2') %>
+              <span>Whitelabel</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 mr-2') %>
+              <span>Custom Email Domain</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 mr-2') %>
+              <span>Priority Support</span>
+            </li>
+            <li class="flex items-center">
+              <%= svg_icon('check', class: 'w-5 h-5 mr-2') %>
+              <span>Dedicated Account Manager</span>
+            </li>
+          </ul>
+          <div class="card-actions justify-end">
+            <% if @current_subscription&.enterprise? %>
+              <button class="btn btn-base-100" disabled>Current Plan</button>
+            <% else %>
+              <%= link_to 'Contact Sales', 'https://signpaw.com/contactus', target: '_blank', class: 'btn btn-base-100' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-0 md:w-52"></div>
+</div>
+
+<%= javascript_tag nonce: true do %>
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Plans page loaded, setting up subscribe buttons...');
+    const subscribeButtons = document.querySelectorAll('[data-action="subscribe"]');
+    console.log('Found subscribe buttons:', subscribeButtons.length);
+    
+    subscribeButtons.forEach(function(button) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Subscribe button clicked');
+        const planType = this.getAttribute('data-plan-type');
+        console.log('Plan type:', planType);
+        subscribeToPlan(planType);
+      });
+    });
+
+    // Handle manage subscription button
+    const manageButton = document.querySelector('[data-action="manage-subscription"]');
+    if (manageButton) {
+      manageButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Manage subscription clicked');
+        createPortalSession();
+      });
+    }
+  });
+
+  function subscribeToPlan(planType) {
+    console.log('subscribeToPlan called with:', planType);
+    const csrfToken = document.querySelector('meta[name="csrf-token"]');
+    
+    if (!csrfToken) {
+      console.error('CSRF token not found');
+      alert('Security token missing. Please refresh the page and try again.');
+      return;
+    }
+
+    const url = '<%= create_checkout_session_plans_path %>';
+    console.log('Fetching:', url);
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken.content,
+        'Accept': 'application/json'
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify({ plan_type: planType })
+    })
+    .then(response => {
+      console.log('Response status:', response.status);
+      if (!response.ok) {
+        return response.json().then(data => {
+          throw new Error(data.error || 'Server error');
+        });
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Response data:', data);
+      if (data.checkout_url) {
+        console.log('Redirecting to:', data.checkout_url);
+        window.location.href = data.checkout_url;
+      } else if (data.error) {
+        alert('Error: ' + data.error);
+      } else {
+        alert('Unexpected response. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred: ' + error.message + '. Please check the console for details.');
+    });
+  }
+
+  function createPortalSession() {
+    console.log('createPortalSession called');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]');
+    
+    if (!csrfToken) {
+      console.error('CSRF token not found');
+      alert('Security token missing. Please refresh the page and try again.');
+      return;
+    }
+
+    const url = '<%= create_portal_session_plans_path %>';
+    console.log('Fetching:', url);
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken.content,
+        'Accept': 'application/json'
+      },
+      credentials: 'same-origin',
+      redirect: 'manual' // Don't follow redirects automatically
+    })
+    .then(response => {
+      console.log('Response status:', response.status);
+      // Check if it's a redirect
+      if (response.status === 302 || response.status === 301) {
+        const location = response.headers.get('Location');
+        if (location) {
+          console.log('Redirecting to:', location);
+          window.location.href = location;
+          return;
+        }
+      }
+      // If not a redirect, try to parse as JSON
+      return response.json().then(data => {
+        if (data.portal_url || data.url) {
+          console.log('Redirecting to portal:', data.portal_url || data.url);
+          window.location.href = data.portal_url || data.url;
+        } else {
+          throw new Error(data.error || 'No redirect URL received');
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred: ' + error.message + '. Please check the console for details.');
+    });
+  }
+<% end %>
+

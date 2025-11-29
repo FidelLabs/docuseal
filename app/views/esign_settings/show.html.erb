@@ -44,7 +44,7 @@
       <h2 class="text-3xl font-bold">
         <%= t('signing_certificates') %>
       </h2>
-      <% if can?(:create, @encrypted_config) %>
+      <% if can?(:create, @encrypted_config) && current_account.has_pro_plan? %>
         <%= link_to new_settings_esign_path, class: 'btn btn-primary btn-md', data: { turbo_frame: 'modal' } do %>
           <%= svg_icon('plus', class: 'w-6 h-6') %>
           <span><%= t('upload_cert') %></span>

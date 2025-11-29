@@ -87,6 +87,14 @@ Rails.application.routes.draw do
   resources :upgrade, only: %i[index], controller: 'console_redirect'
   resources :manage, only: %i[index], controller: 'console_redirect'
   resource :testing_account, only: %i[show destroy]
+  resources :plans, only: %i[index] do
+    collection do
+      get :success
+      get :contact
+      post :create_checkout_session
+      post :create_portal_session
+    end
+  end
   resources :testing_api_settings, only: %i[index]
   resources :submitters_autocomplete, only: %i[index]
   resources :submitters_resubmit, only: %i[update]
@@ -168,6 +176,7 @@ Rails.application.routes.draw do
   resources :submitters, only: %i[], param: 'slug' do
     resources :download, only: %i[index], controller: 'submissions_download'
     resources :send_email, only: %i[create], controller: 'submitters_send_email'
+    resources :send_sms, only: %i[create], controller: 'submitters_send_sms'
     resources :debug, only: %i[index], controller: 'submissions_debug' if Rails.env.development?
   end
 

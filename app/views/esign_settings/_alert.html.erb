@@ -1,0 +1,15 @@
+<% unless current_account.has_pro_plan? %>
+  <div class="alert my-4">
+    <%= svg_icon('info_circle', class: 'w-6 h-6') %>
+    <div>
+      <p class="font-bold">
+        <%= t('unlock_with_docuseal_pro') %>
+      </p>
+      <p class="text-gray-700">
+        <%= t('use_your_own_certificates_to_sign_and_verify_pdf_files') %>
+        <br>
+        <%= link_to t('learn_more'), plans_path, class: 'link font-medium' %>
+      </p>
+    </div>
+  </div>
+<% end %>

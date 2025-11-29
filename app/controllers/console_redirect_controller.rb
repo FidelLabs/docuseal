@@ -6,7 +6,8 @@ class ConsoleRedirectController < ApplicationController
 
   def index
     if request.path == '/upgrade'
-      params[:redir] = Docuseal.multitenant? ? "#{Docuseal::CONSOLE_URL}/plans" : "#{Docuseal::CONSOLE_URL}/on_premises"
+      return redirect_to(plans_path) if signed_in?
+      return redirect_to(new_user_session_path(redir: plans_path))
     end
 
     params[:redir] = "#{Docuseal::CONSOLE_URL}/manage" if request.path == '/manage'
